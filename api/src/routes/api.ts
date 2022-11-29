@@ -1,11 +1,39 @@
-import { Router, Response, Request } from 'express';
-import colors from 'colors'
+import { Router } from 'express';
+import TeachersController from '../controllers/TeachersController';
+import GroupsController from '../controllers/GroupsController';
+import PartialsController from '../controllers/PartialsController';
+import ActivitiesController from '../controllers/ActivitiesController';
+import StudentsController from '../controllers/StudentsController';
+import multer from 'multer';
 
+const upload = multer({ dest: "uploads/" });
 const router: Router = Router();
 
-router.get('/test', (req: Request, res: Response) =>{
-    console.log(colors.green("Un texto pa checar XDDDD"))
-    res.status(200).json({'msg': 'Ya esta funcionando el ruteo'})
-})
+//Auth routes
+router.post('/sign-up', TeachersController.signUp);
+router.post('/sign-in', TeachersController.signIn);
+
+//Groups routes
+router.post('/create-group', GroupsController.create);
+router.get('/get-groups', GroupsController.readAll);
+router.get('/get-group/:id', GroupsController.readOne);
+router.put('/edit-group/:id', GroupsController.update);
+
+//Partials routes
+router.post('/create-partial', PartialsController.create);
+router.get('/get-partial/:id', PartialsController.readOne);
+router.put('/edit-partial/:id', PartialsController.update);
+
+//Activites routes
+router.post('/create-activity', ActivitiesController.create);
+router.put('/edit-activity/:id', ActivitiesController.update);
+
+//Students routes
+router.post('/read-students', upload.single('file') ,StudentsController.readFile);
+router.post('/save-students',StudentsController.create);
+router.put('/edit-student/:id',StudentsController.update);
+router.delete('/delete-student/:id',StudentsController.delete);
+router.post('/asign-activity/:id',StudentsController.assignActivities);
+router.post('/save-scores',StudentsController.saveScores);
 
 export default router;
