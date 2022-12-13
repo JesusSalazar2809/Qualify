@@ -6,6 +6,8 @@ interface ITeacher extends Document{
     name:string;
     email:string;
     password:string;
+    createdAt: Date;
+    updateAt: Date;
 }
 
 
@@ -22,7 +24,7 @@ const teacherShcema = new Schema<ITeacher>({
         type: String,
         required: true
     },
-});
+},{timestamps: true});
 
 teacherShcema.pre('save', async function (next) {
     const user = this;

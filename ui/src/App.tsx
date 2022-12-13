@@ -3,55 +3,20 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link
 } from "react-router-dom";
-
+import { Footer } from "./components/Footer";
+import { Header } from "./components/Header";
+import { Login } from "./pages/Login";
 export default function App() {
   return (
-    <Router>
-      <div>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-        </ul>
-
-        <hr />
-        <Routes>
-          <Route path="/" element={<Home />}/>
-          <Route path="/about" element={<About />}/>
-          <Route path="/dashboard" element={<Dashboard />}/>
-        </Routes>
-      </div>
-    </Router>
-  );
-}
-function Home() {
-  return (
-    <div>
-      <h2>Home</h2>
-    </div>
-  );
-}
-
-function About() {
-  return (
-    <div>
-      <h2>About</h2>
-    </div>
-  );
-}
-
-function Dashboard() {
-  return (
-    <div>
-      <h2>Dashboard</h2>
-    </div>
+    <React.Fragment>
+      <Header/>
+      <Router>
+          <Routes>
+            <Route path="/" element={<Login />}/>
+          </Routes>
+      </Router>
+      <Footer/>
+    </React.Fragment>
   );
 }

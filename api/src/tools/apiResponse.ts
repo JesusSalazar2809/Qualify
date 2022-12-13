@@ -13,5 +13,5 @@ export  function internalerror(res: Response, msg: string, data: object | Array<
 }
 
 export  function unauthorize(res: Response, msg: string){
-    return res.status(500).json({msg})
+    return res.status(403).json({msg})
 }

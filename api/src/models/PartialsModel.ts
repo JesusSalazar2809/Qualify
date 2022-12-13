@@ -3,6 +3,8 @@ import { Document, Schema, model, Types } from 'mongoose';
 interface IPartials extends Document{
     name:string;
     group_id:Types.ObjectId;
+    createdAt: Date;
+    updateAt: Date;
 }
 
 const partialShcema = new Schema<IPartials>({
@@ -15,6 +17,6 @@ const partialShcema = new Schema<IPartials>({
         ref:'groups',
         required: true
     },
-});
+},{timestamps: true});
 
 export const Partials = model<IPartials>('partials', partialShcema);

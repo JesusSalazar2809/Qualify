@@ -4,6 +4,8 @@ interface IActivities extends Document{
     name:string;
     percentage: number;
     partial_id:Types.ObjectId;
+    createdAt: Date;
+    updateAt: Date;
 }
 
 const activitiesShcema = new Schema<IActivities>({
@@ -20,6 +22,6 @@ const activitiesShcema = new Schema<IActivities>({
         ref:'partials',
         required: true
     },
-});
+},{timestamps: true});
 
 export const Activities = model<IActivities>('activities', activitiesShcema);
