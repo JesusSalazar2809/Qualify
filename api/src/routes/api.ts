@@ -18,6 +18,7 @@ router.post('/create-group', GroupsController.create);
 router.get('/get-groups', GroupsController.readAll);
 router.get('/get-group/:id', GroupsController.readOne);
 router.put('/edit-group/:id', GroupsController.update);
+router.delete('/delete-group/:id', GroupsController.delete)
 
 //Partials routes
 router.post('/create-partial', PartialsController.create);

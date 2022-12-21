@@ -2,19 +2,19 @@ import { Response } from "express";
 import { IGetUserAuthInfoRequest } from "../tools/types";
 import { badRequest, internalerror, success } from '../tools/apiResponse';
 import { Groups } from "../models/GroupsModel";
-import { isValidObjectId, ObjectId, Types } from 'mongoose';
-import { Teacher } from '../models/TeachersModel';
+import { Types } from 'mongoose';
+import { Partials } from '../models/PartialsModel';
+import { Students } from "../models/StudentsModel";
+import { Activities } from "../models/ActivitiesModel";
 
 
 export default {
     create: async (req: IGetUserAuthInfoRequest, res: Response) =>{
         try {
-            const { teacher_id } = req.body;
-            const teacher = await Teacher.findById(teacher_id);
-            if(!isValidObjectId(teacher_id) || !teacher){
-                return badRequest(res, 'Invalid ID sent')
-            }
-            await Groups.create(req.body);
+            await Groups.create({
+                teacher_id: req.user?._id,
+                name:req.body.name
+            });
             return success(res, 'Group created successfully')
         } catch (error:any) {
             console.log(error)
@@ -39,9 +39,8 @@ export default {
                 },
                 {
                     $project:{
-                        _id:0,
                         name:1,
-                        students:{$size:"$students"}
+                        countStudents:{$size:"$students"}
                     }
                 }
             ]);
@@ -70,13 +69,13 @@ export default {
                 },
                 {
                     $project:{
-                        _id:0,
+                        _id:1,
                         name:1,
                         partials:1
                     }
                 }
             ]);
-            return success(res, 'Group information got successfully', group)
+            return success(res, 'Group information got successfully', group.shift())
         } catch (error:any) {
             console.log(error)
             return internalerror(res, 'Problems in the endpoint')
@@ -96,18 +95,17 @@ export default {
             return internalerror(res, 'Problems in the endpoint')
         }
     },
-    //Pending to check
-    /* delete: async (req: IGetUserAuthInfoRequest, res: Response) =>{
+    delete: async (req: IGetUserAuthInfoRequest, res: Response) =>{
         try {
-            const { teacher_id } = req.body;
-            const teacher = await Teacher.findById(teacher_id);
-            if(!isValidObjectId(teacher_id) || !teacher){
-                return badRequest(res, 'Invalid ID sent')
-            }
-            await Groups.create(req.body);
+            const { id } = req.params;
+            const partials = await Partials.find({group_id:id}).distinct('_id');
+            await Students.remove({group_id:id});
+            await Activities.remove({partial_id:{$in:[partials]}});
+            await Partials.remove({group_id:id});
+            await Groups.findOneAndRemove({_id:id})
             return success(res, 'Group created successfully')
         } catch (error:any) {
             return internalerror(res, 'Problems in the endpoint')
         }
-    }, */
+    },
 }

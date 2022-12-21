@@ -5,11 +5,19 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  padding-bottom: 100px;
+  min-height: 100vh;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.default-container{
+  margin: auto;
+  padding: 20px;
 }
 
 .header {
@@ -45,10 +53,10 @@ code {
 
 .footer {
   background-color: #E9BF27;
-  position: absolute;
-  bottom: 0;
   width: 100%;
-  height: 120px;
+  position: absolute;
+  height: 100px;  
+  bottom: 0;
 }
 
 .card {
@@ -59,6 +67,37 @@ code {
   margin: auto;
   margin-top: 30px;
   margin-bottom: 30px;
+}
+
+.sub-card {
+  background-color: #5A6978;
+  width: 260px;
+  height: 180px;
+  margin: 20px;
+  text-decoration: none;
+}
+
+.sub-card:hover{
+  background-color: #0F5C86;
+}
+
+.sub-card-groups-name {
+  color: #FFFFFF;
+  font-family: Lato;
+  font-size: 31px;
+  line-height: 40px;
+  text-align: left;
+  margin: 10px;
+  padding-bottom: 30%;
+}
+
+.sub-card-groups-quantity {
+  color: #FFFFFF;
+  font-family: Lato;
+  font-size: 26px;
+  line-height: 33px;
+  text-align: left;
+  margin: 10px;
 }
 
 .title{
@@ -78,6 +117,18 @@ code {
   text-align: center;
   margin: auto;
   margin-bottom: 30px;
+}
+
+.title-home{
+  color: #47525E;
+  margin: 10px;
+  font-size: 50px;
+}
+
+.sub-title-home{
+  color: #47525E;
+  margin: 10px;
+  font-size: 30px;
 }
 
 .inputs{
@@ -124,4 +175,27 @@ code {
   text-align: left;
   text-decoration: underline;
   margin-top: 50px;
+}
+
+.partial-card{
+  background-color: #0F5C86;
+  width: 372px;
+  height: 98px;
+  margin: 20px;
+  text-decoration: none;
+}
+
+.partial-card-groups-name {
+  color: #FFFFFF;
+  font-size: 35px;
+  text-align: center;
+  
+}
+
+.partial-card:hover{
+  background-color: #47525E;
+}
+
+.popover-container{
+  text-align: center;
 }
