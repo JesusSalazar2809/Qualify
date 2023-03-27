@@ -10,6 +10,7 @@ export type TGroup = {
 }
 
 export type TStudent = {
+    _id:string,
     name:string,
     scores:TScores[],
     group_id:string,
@@ -18,6 +19,7 @@ export type TStudent = {
 }
 
 export type TScores = {
+    _id:string,
     activity_id: string,
     score: number,
     createdAt: Date,
@@ -28,6 +30,14 @@ export type TPartial = {
     _id?:string,
     name:string,
     group_id:string,
-    activities?:any,
+    group:TGroup,
+    activities?:TActivities[],
     students?:TStudent[],
+}
+
+export type TActivities = {
+    _id:string,
+    name:string,
+    percentage:number,
+    partial_id:string
 }

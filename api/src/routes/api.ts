@@ -24,6 +24,7 @@ router.delete('/delete-group/:id', GroupsController.delete)
 router.post('/create-partial', PartialsController.create);
 router.get('/get-partial/:id', PartialsController.readOne);
 router.put('/edit-partial/:id', PartialsController.update);
+router.delete('/delete-partial/:id', PartialsController.delete)
 
 //Activites routes
 router.post('/create-activity', ActivitiesController.create);

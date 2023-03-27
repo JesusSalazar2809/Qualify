@@ -22,44 +22,44 @@ export const Login = () => {
   };
   
   return (
-    <Card
-      className='card'
-    >
-      <p className='title'>Bienvenido a Qualify!</p>
-      <p className='sub-title'>Tu aplicacion para calificar en linea!</p>
-      <Form
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-      >
-        <Form.Item
-          wrapperCol={{offset:1}}
-          name="email"
-          rules={[{ required: true, message: 'Favor de ingresar su email' }]}
+    <Row>
+      <Col className='card'>
+        <p className='title'>Bienvenido a Qualify!</p>
+        <p className='sub-title'>Tu aplicacion para calificar en linea!</p>
+        <Form
+          initialValues={{ remember: true }}
+          onFinish={onFinish}
         >
-          <Input className='inputs' placeholder='Ingrese su correo electronico' />
-        </Form.Item>
+          <Form.Item
+            wrapperCol={{offset:1}}
+            name="email"
+            rules={[{ required: true, message: 'Favor de ingresar su email' }]}
+          >
+            <Input className='inputs' placeholder='Ingrese su correo electronico' />
+          </Form.Item>
 
-        <Form.Item
-          wrapperCol={{offset:1}}
-          name="password"
-          rules={[{ required: true, message: 'Favor de ingresar su contraseña' }]}
-        >
-          <Input.Password className='inputs' placeholder='Ingrese su contraseña' />
-        </Form.Item>
-        <Form.Item wrapperCol={{ offset: 7 }}>
-          <Button htmlType="submit" className='button' type='ghost' loading={isLoading}>
-            Ingresar
-          </Button>
-        </Form.Item>
-      </Form>
-      <Row>
-        <Col className='text-login'>
-          <a href='/sign-up'>Crea tu cuenta gratis!</a>
-        </Col>
-        <Col className='text-login' lg={{offset:1}}>
-          <a href='/recover-password'>¿Olvidaste tu contraseña?</a>
-        </Col>
-      </Row>
-    </Card>
+          <Form.Item
+            wrapperCol={{offset:1}}
+            name="password"
+            rules={[{ required: true, message: 'Favor de ingresar su contraseña' }]}
+          >
+            <Input.Password className='inputs' placeholder='Ingrese su contraseña' />
+          </Form.Item>
+          <Form.Item wrapperCol={{ offset: 7 }}>
+            <Button htmlType="submit" className='button' type='ghost' loading={isLoading}>
+              Ingresar
+            </Button>
+          </Form.Item>
+        </Form>
+        <Row>
+          <Col className='text-login'>
+            <a href='/sign-up'>Crea tu cuenta gratis!</a>
+          </Col>
+          <Col className='text-login'>
+            <a href='/recover-password'>¿Olvidaste tu contraseña?</a>
+          </Col>
+        </Row>
+      </Col>
+    </Row>
   )
 }

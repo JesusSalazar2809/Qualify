@@ -4,6 +4,8 @@ import { badRequest, internalerror, success } from '../tools/apiResponse';
 import { Partials } from '../models/PartialsModel';
 import { isValidObjectId, Types } from "mongoose";
 import { Groups } from '../models/GroupsModel';
+import { Activities } from "../models/ActivitiesModel";
+import { Students } from "../models/StudentsModel";
 
 
 export default {
@@ -47,11 +49,21 @@ export default {
                     }
                 },
                 {
+                    $lookup:{
+                        from:'groups',
+                        localField:'group_id',
+                        foreignField:'_id',
+                        as:"group"
+                    }
+                },
+                {$unwind:'$group'},
+                {
                     $project:{
-                        _id:0,
+                        _id:1,
                         name:1,
                         activities:1,
-                        students:1
+                        students:1,
+                        group:1
                     }
                 }
             ]);
@@ -75,18 +87,25 @@ export default {
             return internalerror(res, 'Problems in the endpoint')
         }
     },
-    //Pending to check
-    /* delete: async (req: IGetUserAuthInfoRequest, res: Response) =>{
+    delete: async (req: IGetUserAuthInfoRequest, res: Response) =>{
         try {
-            const { teacher_id } = req.body;
-            const teacher = await Teacher.findById(teacher_id);
-            if(!isValidObjectId(teacher_id) || !teacher){
-                return badRequest(res, 'Invalid ID sent')
-            }
-            await Groups.create(req.body);
-            return success(res, 'Group created successfully')
+            const { id } = req.params;
+            const activities = await Activities.find({partial_id:id}).distinct('_id');
+            await Students.updateMany({},
+                {
+                    $pull:{
+                        //'scores.activity_id':{$in:activities}
+                        scores:{
+                            activity_id:{$in:activities}
+                        }
+                    }
+                }
+            )
+            await Activities.remove({partial_id:id})
+            await Partials.findByIdAndRemove(id)
+            return success(res, 'Partial deleted successfully')
         } catch (error:any) {
             return internalerror(res, 'Problems in the endpoint')
         }
-    }, */
+    },
 }

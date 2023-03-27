@@ -6,7 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   position: relative;
-  padding-bottom: 100px;
+  padding-bottom: 80px;
   min-height: 100vh;
 }
 
@@ -60,13 +60,12 @@ code {
 }
 
 .card {
-  background-color: rgba(19, 206, 102, 0);
   border: 2px solid #000000;
+  border-radius: 1rem;
   width: 600px;
   height: 650px;
   margin: auto;
   margin-top: 30px;
-  margin-bottom: 30px;
 }
 
 .sub-card {
@@ -107,6 +106,7 @@ code {
   width: 400px;
   text-align: center;
   margin: auto;
+  padding-top: 1rem;
   padding-bottom: 50px;
 }
 .sub-title {
@@ -135,12 +135,11 @@ code {
   background-color: #FFFFFF;
   border: 1px solid #8492A6;
   border-radius: 5px;
-  width: 504px;
+  width: 95%;
   height: 70px;
   margin: auto;
   color: #8190A5;
   font-size: 24px;
-  line-height: 62px;
   text-align: left;
 }
 
@@ -171,10 +170,9 @@ code {
 .text-login {
   color: #1585FD;
   font-size: 25px;
-  line-height: 33px;
-  text-align: left;
-  text-decoration: underline;
-  margin-top: 50px;
+  text-decoration: none;
+  margin-top: 3rem;
+  padding: 1rem;
 }
 
 .partial-card{
@@ -198,4 +196,10 @@ code {
 
 .popover-container{
   text-align: center;
+}
+
+.icons{
+  font-size: 40px;
+  text-align: center;
+  vertical-align:text-bottom;
 }

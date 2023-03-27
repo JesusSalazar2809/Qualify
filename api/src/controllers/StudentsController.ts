@@ -3,7 +3,7 @@ import { IGetUserAuthInfoRequest } from "../tools/types";
 import { badRequest, internalerror, success } from '../tools/apiResponse';
 import { Students } from '../models/StudentsModel';
 import { Groups } from '../models/GroupsModel';
-import { isValidObjectId } from "mongoose";
+import { isValidObjectId, Types } from "mongoose";
 import { Activities } from '../models/ActivitiesModel';
 import Excel from 'exceljs';
 import path from 'path';
@@ -12,13 +12,36 @@ import fs from 'fs';
 export default {
     create: async (req: IGetUserAuthInfoRequest, res: Response) =>{
         try {
-            const { students, group_id } = req.body;
+            const { students, group_id, partial_id } = req.body;
             const group = await Groups.findById(group_id);
             if(!isValidObjectId(group_id) || !group){
                 return badRequest(res, 'Invalid ID sent')
             }
+            let obj = [];
 
-            await Students.insertMany(students)
+            const currentActivities = await Activities.distinct("_id",{partial_id})
+            const scores:any[] = [];
+            await currentActivities.map((id:string)=>{
+                const activity ={
+                    activity_id:new Types.ObjectId(id),
+                    score:0
+                }
+                scores.push(activity);
+            })
+
+            if(students.length > 0){
+                for(let student of students){
+
+                    const newStudent = {
+                        name:student,
+                        group_id,
+                        scores
+                    }
+                    obj.push(newStudent)
+                }
+            }
+
+            await Students.insertMany(obj)
             return success(res, "Students saved successfully")
         } catch (error:any) {
             console.log(error)
