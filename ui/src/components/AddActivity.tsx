@@ -3,25 +3,26 @@ import Request from '../services/Request'
 
 interface props{
     open: React.Dispatch<boolean>;
-    groupID: string;
     updateInfo:() => void;
     partialId:string | undefined;
+    currentPercentageUsed:number;
 }
 
-const DrawerComponent = ({ open, groupID, updateInfo, partialId}:props) => {
+const AddActivityComponent = ({ open, updateInfo, partialId, currentPercentageUsed}:props) => {
     const [form] = Form.useForm()
-    let studentName = "";
+    let name = "";
+    let percentage = 0;
 
     const onClose = () => {
         open(false);
     }
 
     const createStudent = ()=>{
-        Request.post("/save-students",{students:[studentName], group_id:groupID, partial_id:partialId}).then(_=>{
+        Request.post("/create-activity",{name, percentage, partial_id:partialId}).then(_=>{
             notification.success({
                 placement: 'top',
                 duration:3,
-                message:"Estudiante(s) creado(s) correctamente!!"
+                message:"Actividad creada correctamente!!"
             })
             open(false)
             updateInfo()
@@ -29,14 +30,14 @@ const DrawerComponent = ({ open, groupID, updateInfo, partialId}:props) => {
             notification.error({
                 placement:"top",
                 duration:3,
-                message:"Opss!! No se pudo agregar el estudiante, por favor intenta nuevamente"
+                message:"Opss!! No se pudo agregar la actividad, por favor intenta nuevamente"
             })
         })
     }
     return (
         <>
             <Drawer
-                title="Crear estudiante(s)"
+                title="Crear actividad"
                 width={720}
                 onClose={onClose}
                 open={true}
@@ -57,9 +58,18 @@ const DrawerComponent = ({ open, groupID, updateInfo, partialId}:props) => {
                             <Form.Item
                                 name="name"
                                 label="Nombre:"
-                                rules={[{ required: true, message: 'Favor de ingresar el nombre del estudiante' }]}
+                                rules={[{ required: true, message: 'Favor de ingresar el nombre de su actividad' }]}
                             >
-                                <Input placeholder="Ingrese el nombre del estudiante" onChange={(e:any)=>{studentName = e.target.value}} />
+                                <Input placeholder="Nombre de la activdad" onChange={(e:any)=>{name = e.target.value}} />
+                            </Form.Item>
+                        </Col>
+                        <Col span={24}>
+                            <Form.Item
+                                name="percentage"
+                                label="Porcentaje:"
+                                rules={[{ required: true, message: 'Favor de ingresar un porcentaje' }]}
+                            >
+                                <Input placeholder="Ingrese el porcentaje para esta actividad" type='number' onChange={(e:any)=>{percentage = e.target.value}} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -69,4 +79,4 @@ const DrawerComponent = ({ open, groupID, updateInfo, partialId}:props) => {
     );
 };
 
-export default DrawerComponent;
+export default AddActivityComponent;

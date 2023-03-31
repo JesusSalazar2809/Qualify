@@ -1,13 +1,14 @@
-import { DeleteFilled, EditFilled, PlusCircleFilled } from '@ant-design/icons'
-import { Button, Col, notification, Modal, Form, Input, Row, Popconfirm, Popover } from 'antd';
+import { DeleteFilled, EditFilled, HomeFilled, PlusCircleFilled } from '@ant-design/icons'
+import { Button, Col, notification, Modal, Form, Input, Row, Popconfirm, Popover, Tooltip } from 'antd';
 import Request from '../services/Request'
 import { useEffect, useState } from 'react';
 import { TGroup, TPartial } from '../types';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 
 export const Group = () => {
+    const navigate = useNavigate();
     const { id } = useParams();
     const [group, setGroup] = useState<TGroup>();
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -136,16 +137,27 @@ export const Group = () => {
         <div className='default-container'>
             <Row justify='space-between'>
                 <Col>
+                    <Tooltip title="Ir al home" >
+                        <Button type='text' onClick={()=>navigate("/home")}>
+                            <HomeFilled style={{
+                                fontSize:'50px'
+                            }} />
+                        </Button>
+                    </Tooltip>
+                </Col>
+                <Col>
                     <p className='title-home'>Grupo: {group?.name}</p>
                 </Col>
                 <Col>
-                    <Button type='text' onClick={showModal}>
-                        <PlusCircleFilled 
-                            style={{
-                                fontSize:'50px'
-                            }}
-                        />
-                    </Button>
+                    <Tooltip title="Añadir parcial">
+                        <Button type='text' onClick={showModal}>
+                            <PlusCircleFilled 
+                                style={{
+                                    fontSize:'50px'
+                                }}
+                            />
+                        </Button>
+                    </Tooltip>
                 </Col>
             </Row>
             <hr></hr>

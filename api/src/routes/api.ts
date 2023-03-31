@@ -5,6 +5,7 @@ import PartialsController from '../controllers/PartialsController';
 import ActivitiesController from '../controllers/ActivitiesController';
 import StudentsController from '../controllers/StudentsController';
 import multer from 'multer';
+import { Activities } from '../models/ActivitiesModel';
 
 const upload = multer({ dest: "uploads/" });
 const router: Router = Router();
@@ -29,6 +30,11 @@ router.delete('/delete-partial/:id', PartialsController.delete)
 //Activites routes
 router.post('/create-activity', ActivitiesController.create);
 router.put('/edit-activity/:id', ActivitiesController.update);
+router.get('/get-actitivities', async (req, res)=>{
+    const arr = await Activities.find();
+
+    res.status(200).json({data: arr})
+});
 
 //Students routes
 router.post('/read-students', upload.single('file') ,StudentsController.readFile);

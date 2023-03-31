@@ -4,6 +4,7 @@ import { badRequest, internalerror, success } from '../tools/apiResponse';
 import { Partials } from '../models/PartialsModel';
 import { isValidObjectId } from "mongoose";
 import { Activities } from '../models/ActivitiesModel';
+import { Students } from "../models/StudentsModel";
 
 
 export default {
@@ -14,7 +15,19 @@ export default {
             if(!isValidObjectId(partial_id) || !partial){
                 return badRequest(res, 'Invalid ID sent')
             }
-            await Activities.create(req.body);
+            const newActivity = await Activities.create(req.body);
+            //Asignar la nueva actividad a los estudiantes
+            const students_id = await Students.distinct("_id",{group_id: partial.group_id})
+            await Students.updateMany({_id:students_id},
+                {
+                    $push:{
+                        scores:{
+                            activity_id: newActivity._id,
+                            score: 0
+                        }
+                    }
+                }
+            );
             return success(res, 'Activity created successfully')
         } catch (error:any) {
             console.log(error)

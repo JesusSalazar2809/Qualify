@@ -4,11 +4,11 @@ export  function success(res: Response, msg: string, data: object | Array<any> |
     return res.status(200).json({msg, data})
 }
 
-export  function badRequest(res: Response, msg: string, data: object | Array<any> = {}){
+export  function badRequest(res: Response, msg: string, data: object | Array<any> | string = {}){
     return res.status(400).json({msg, data})
 }
 
-export  function internalerror(res: Response, msg: string, data: object | Array<any> = {}){
+export  function internalerror(res: Response, msg: string, data: object | Array<any> | string = {}){
     return res.status(500).json({msg, data})
 }
 
